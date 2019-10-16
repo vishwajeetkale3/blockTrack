@@ -25,7 +25,7 @@ echo 'Getting things ready for Chaincode Invocation..should take only 10 seconds
 sleep 10
 echo 'Adding Consignment..'
 
-sudo docker exec -e “CORE_PEER_LOCALMSPID=Org1MSP” -e “CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp” cli peer chaincode invoke -o orderer.example.com:7050 -C mychannel -n mycc -c '{"function":"bookConsignment","Args":["Guntur","Hyderabad","KiranKumar","6-14/7C,Mill Road, Guntur","91697737397","Kalpana","2-14/A,Near Mandal Office,Hyderabad","91467683763","DoubleCot Bed","250Kg",525","16/10/19"]}'
+sudo docker exec -e “CORE_PEER_LOCALMSPID=Org1MSP” -e “CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp” cli peer chaincode invoke -o orderer.example.com:7050 -C mychannel -n mycc -c '{"function":"bookConsignment","Args":["Guntur","Hyderabad","KiranKumar","6-14/7C,Mill Road, Guntur","91697737397","Kalpana","2-14/A,Near Mandal Office,Hyderabad","91467683763","DoubleCot Bed","250Kg","525","16/10/19"]}'
 
 sleep 5
 echo 'Querying Invoice.. and Tracking..'
