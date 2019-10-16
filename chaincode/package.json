@@ -1,0 +1,19 @@
+{
+  "name": "blockTrack",
+  "version": "1.0.0",
+  "description": "Goods Transport and Tracking System on Hyperledger Fabric with node.js",
+  "engines": {
+    "node": ">=8.4.0",
+    "npm": ">=5.3.0"
+  },
+  "scripts": {
+    "start": "node logic.js"
+  },
+  "engine-strict": true,
+  "engineStrict": true,
+  "license": "Apache-2.0",
+  "dependencies": {
+    "fabric-client": "^1.4.1",
+    "fabric-shim": "^2.0.0-snapshot.99"
+  }
+}
