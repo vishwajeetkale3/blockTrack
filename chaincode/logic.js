@@ -52,7 +52,7 @@ async trackConsignment(stub,args) {
 
      else {
        
-      let consignment = JSON.parse(consignmentAsBytes.toString());
+      let consignment = JSON.parse(consignmentAsBytes);
       return JSON.stringify(consignment);
 
         }
