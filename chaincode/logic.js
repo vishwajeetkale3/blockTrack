@@ -58,7 +58,7 @@ let Chaincode = class {
 
 			let consignment = JSON.parse(consignmentAsBytes.toString());
 			console.log(consignment);
-			return JSON.stringify(consignment);
+			return consignmentAsBytes;
 
 		}
 
