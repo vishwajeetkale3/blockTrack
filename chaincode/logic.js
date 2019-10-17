@@ -5,11 +5,27 @@ const util = require('util');
 let Chaincode = class {
 
 	async Init(stub, args) {
-		console.info('=== Instantiated Application===');
-		return shim.success();
-	}
+		try {
+                 let ret = stub.getFunctionAndParameters();
+                 console.info(ret);
+                 let arg= ret.params;
+			let adminData = {
+			UserId: arg[0],
+                        Type:'admin',
+			AccessKey: arg[1],
+			Name: arg[2],
+			Mobile: arg[3]
+		}
+		await stub.putState(arg[0], Buffer.from(JSON.stringify(adminData)));
+		console.info('===Admin Added ===');
 
+                return shim.success();
+		} catch (err) {
+			console.log(err);
+			return shim.error(err);
+		}
 
+     }
 	async Invoke(stub) {
 		let ret = stub.getFunctionAndParameters();
 		console.info(ret);
@@ -27,18 +43,6 @@ let Chaincode = class {
 			return shim.error(err);
 		}
 	}
-	async registerAdmin(stub, args) {
-
-		let adminData = {
-			UserId: args[0],
-			AccessKey: args[1],
-			Name: args[2],
-			Mobile: args[3]
-		}
-		await stub.putState(args[0], Buffer.from(JSON.stringify(adminData)));
-		console.info('===Admin Added ===');
-
-	}
 	async trackConsignment(stub, args) {
 
 		let consignmentAsBytes = await stub.getState(args[0]);
@@ -46,7 +50,7 @@ let Chaincode = class {
 			throw new Error('Item With this Id Doesnt Exist..!');
 		}
 		let consignmentCheck = JSON.parse(consignmentAsBytes);
-		if (consignmentCheck.Type != 'consignment') {
+		if (consignmentCheck.Type!= 'consignment') {
 
 			throw new Error("Not a Consignment..!");
 
