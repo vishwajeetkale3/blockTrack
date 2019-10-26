@@ -47,12 +47,12 @@ let Chaincode = class {
 
 		let consignmentAsBytes = await stub.getState(args[0]);
 		if (!consignmentAsBytes || consignmentAsBytes.toString().length <= 0) {
-			throw new Error('Item With this Id Doesnt Exist..!');
+			return Buffer.from('Item With this Id Doesnt Exist..!');
 		}
 		let consignmentCheck = JSON.parse(consignmentAsBytes);
 		if (consignmentCheck.Type!= 'consignment') {
 
-			throw new Error("Not a Consignment..!");
+			return Buffer.from("Not a Consignment..!");
 
 		} else {
 
@@ -99,28 +99,28 @@ let Chaincode = class {
 		await stub.putState(trackingId, Buffer.from(JSON.stringify(trackingData)));
 		await stub.putState(invoiceId, Buffer.from(JSON.stringify(consignmentData)));
 		console.info("Consignment Added Succesfully.. Your Invoice Id is " + invoiceId + " And Tracking Id is " + trackingId);
-		console.log("Consignment Added Succesfully.. Your Invoice Id is " + invoiceId + " And Tracking Id is " + trackingId);
+		return Buffer.from("Consignment Added Succesfully.. Your Invoice Id is " + invoiceId + " And Tracking Id is " + trackingId);
 
 
 	}
 
-	async UpdateShipment(stub, args) {
+	async updateShipment(stub, args) {
 
 		let adminAsBytes = await stub.getState(args[0]);
 		let consignmentAsBytes = await stub.getState(args[2]);
 
 		if (!adminAsBytes || adminAsBytes.toString().length <= 0) {
-			throw new Error('Incorrect Admin Id..!');
+			return Buffer.from('Incorrect Admin Id..!');
 		}
 		let admin = JSON.parse(adminAsBytes);
 
 		if (admin.AccessKey != args[1]) {
 
-			throw new Error("Incorrect AccesKey...!");
+			return Buffer.from("Incorrect AccessKey...!");
 		}
 
 		if (!consignmentAsBytes || consignmentAsBytes.toString().length <= 0) {
-			throw new Error('Consignment With this Id Does not Existed..!');
+			return Buffer.from('Consignment With this Id Does not Existed..!');
 		} else {
 			let consignment = JSON.parse(consignmentAsBytes);
 
@@ -128,6 +128,7 @@ let Chaincode = class {
 			consignment.CurrentLocation = args[3];
 			await stub.putState(args[2], Buffer.from(JSON.stringify(consignment)));
 			console.info("Consignment Details Updated Succesfully");
+                        return Buffer.from("Consignment Details Updated Succesfully");
 
 		}
 	}
