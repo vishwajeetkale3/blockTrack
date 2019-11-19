@@ -38,7 +38,7 @@ app.get('/trackConsignment', async function (req, res) {
 // Evaluate the specified transaction.
           const result = await contract.evaluateTransaction('trackConsignment',req.query['trackingId']);
         console.log(`Transaction has been evaluated, result is: ${result.toString()}`);
-        res.render('app',{response:result.toString()});
+        res.send(result.toString());
 } catch (error) {
         console.error(`Failed to evaluate transaction: ${error}`);
         res.status(500).json({error: error});
@@ -71,7 +71,7 @@ app.post('/bookConsignment/', async function (req, res) {
 // Submit the specified transaction.
         let result= await contract.submitTransaction('bookConsignment', req.body.from, req.body.to, req.body.consignerName, req.body.consignerAddress, req.body.consignerMobile, req.body.consigneeName, req.body.consigneeAddress, req.body.consigneeMobile,req.body.itemName,req.body.itemWeight, req.body.frieghtCharges, req.body.date);
         console.log(result.toString());
-        res.render('app',{response:result.toString()});
+        res.send(result.toString());
 // Disconnect from the gateway.
         await gateway.disconnect();
 } catch (error) {
@@ -102,7 +102,7 @@ app.post('/updateShipment/', async function (req, res) {
 // Submit the specified transaction.
         let result=await contract.submitTransaction('updateShipment', req.body.adminId, req.body.key, req.body.consignmentId, req.body.shipmentDetails);
         console.log(result.toString());
-        res.render('app',{response:result.toString()});
+        res.send(result.toString());
 // Disconnect from the gateway.
         await gateway.disconnect();
 } catch (error) {

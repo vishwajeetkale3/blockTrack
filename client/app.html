@@ -1,14 +1,15 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+<meta name="viewport" content="height=device-height, initial-scale=0.68">
 <head>
-<title>blockTrack</title>
+<title>BlockTrack</title>
 <style>
 input[type=submit]{background-color: #008CBA;} 
 input[type=submit]:hover {
   background-color: #45a049;
 }
-input[type=text],input[type=password], select {
-  width: 100%;
+input[type=text], input[type=password],select {
+  width:300px;
   padding: 8px 10px;
   margin: 8px 0;
   display: inline-block;
@@ -21,44 +22,217 @@ div {
   border-radius: 5px;
   background-color: #f2f2f2;
   padding: 20px;
+  height: 100%;
 }
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+button {
+  width: auto;
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 8px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+button:active {
+    background-color: rgb(0, 81, 125);
+  }
+.message-box {
+    background-color: rgb(70, 190, 255);
+    width: 350px;
+    text-align: center;
+    border-radius: 10px;
+    margin: 0 auto;
+    padding: 2px;
+}
+button:hover {
+    opacity: 0.7;
+} 
 </style>
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </head>
 <body>
+  <center><h1>Goods Transport And Tracking System on Hyperledger Fabric</h1></center>
 <div style="text-align:center;">
-<h2>Goods Transport and Tracking System on Hyperledger Fabric</h2>
-
-<h4>Track Consignment</h4>
-<form action="/trackConsignment/" method="get">
-        TrackingId: <input name="trackingId" placeholder="Enter Tracking Id.." type="text" /> <br />
-        <input type="submit" />
+<h2>Book Consignment</h2>
+        <form>
+        Date: <input id="date" type="text" /> <br />
+        From: <input id="from" type="text" /> <br />
+        To: <input id="to" type="text" /> <br />
+        Consigner Name: <input id="consignerName" type="text" /> <br />
+        Address: <input id="consignerAddress" type="text" /> <br />
+        Mobile: <input id="consignerMobile" type="text" /> <br />
+        Consignee Name: <input id="consigneeName" type="text" /> <br />
+        Address: <input id="consigneeAddress" type="text" /> <br />
+        Mobile: <input id="consigneeMobile" type="text" /> <br />
+        Item Name: <input id="itemName" type="text" /> <br />
+        Weight: <input id="itemWeight" type="text" /> <br />
+        Frieght Charges: <input id="frieghtCharges" type="text" /> <br />
     </form>
-
-<h4>Book Consignment</h4>
-<form action="/bookConsignment" method="post">
-        Date: <input name="date" type="text" /> <br />
-        From: <input name="from" type="text" /> <br />
-        To: <input name="to" type="text" /> <br />
-        Consigner Name: <input name="consignerName" type="text" /> <br />
-        Address: <input name="consignerAddress" type="text" /> <br />
-        Mobile: <input name="consignerMobile" type="text" /> <br />
-        Consignee Name: <input name="consigneeName" type="text" /> <br />
-        Address: <input name="consigneeAddress" type="text" /> <br />
-        Mobile: <input name="consigneeMobile" type="text" /> <br />
-        Item Name: <input name="itemName" type="text" /> <br />
-        Weight: <input name="itemWeight" type="text" /> <br />
-        Frieght Charges: <input name="frieghtCharges" type="text" /> <br />
-       <input type="submit" />
+    <button onclick="bookConsignment()">Submit</button>
+</br>
+<h2>Update Consignment</h2>
+        <form>
+        Admin Id: <input id="adminId" type="text" /> <br />
+        Access Key: <input id="key" type="password" /> <br />
+        Consignment Id: <input id="consignmentId" type="text" /> <br />
+        Shipment Details: <input id="shipmentDetails" type="text" /> <br />
     </form>
-<h4>Update Shipment</h4>
-<form action="/updateShipment/" method="post">
-        AdminId: <input name="adminId" type="text" /> <br />
-        AccessKey: <input name="key" type="password" /> <br />
-        ConsignmentId: <input name="consignmentId" type="text" /> <br />
-        Shipment Details: <input name="shipmentDetails" type="text" /> <br />
-        <input type="submit" />
-    </form>
+        <button onclick="updateShipment()">Submit</button>
+      </br>
 
+ <h2>Track Consignment</h2>
+       <form>
+        Tracking Id: <input id="trackingId" placeholder="Enter Tracking Id or Invoice Id.." type="text" />
+    </form>
+  <button onclick="trackConsignment()">Submit</button>
+</br>
+<span id="getResult"></span>
 <div>
+<script>
+function bookConsignment() {
+        $.ajax({
+                type: "post",
+                contentType: "application/x-www-form-urlencoded", 
+                url: 'http://${IP_ADDRESS}:8080/bookConsignment/',
+                data: {
+                  'from': document.getElementById('from').value,
+                   'to': document.getElementById('to').value,
+                    'consignerName':document.getElementById('consignerName').value,
+                    'consignerAddress':document.getElementById('consignerAddress').value,
+                    'consignerMobile':document.getElementById('consignerMobile').value,
+                    'consigneeName':document.getElementById('consigneeName').value,
+                    'consigneeAddress':document.getElementById('consigneeAddress').value,
+                    'consigneeMobile':document.getElementById('consigneeMobile').value,
+                    'itemName':document.getElementById('itemName').value,
+                    'itemWeight':document.getElementById('itemWeight').value,
+                    'frieghtCharges':document.getElementById('frieghtCharges').value,
+                    'date':document.getElementById('date').value
+                      },
+             success: function(response) {
+              alert(response)
+                 },
+            
+              error: function(xhr) {
+              alert('Request Failed. Make Sure Server is Listening.')
+           }
+        });
+   }
+   function updateShipment() {
+        $.ajax({
+                type: "post",
+                contentType: "application/x-www-form-urlencoded", 
+                url: 'http://${IP_ADDRESS}:8080/updateShipment/',
+                data: {
+                  'adminId': document.getElementById('adminId').value,
+                  'key': document.getElementById('key').value,
+                  'consignmentId': document.getElementById('consignmentId').value,
+                   'shipmentDetails': document.getElementById('shipmentDetails').value
+                      },
+             success: function(response) {
+              alert(response)
+                 },
+            
+              error: function(xhr) {
+              alert('Request Failed. Make Sure Server is Listening.')
+           }
+        });
+   }
+function trackConsignment() {
+          $.ajax({
+             url: "http://${IP_ADDRESS}:8080/trackConsignment/",
+             type: "get",
+             data: { 
+            'trackingId':document.getElementById('trackingId').value
+              },
+            success: function(response) {
+              if (response=="Error:Item With this Id Doesnt Exist..!" || response=="Error:Not a Consignment.!"){
+                let sectionsContent = ''
+                document.querySelector('#getResult').innerHTML = sectionsContent;
+                alert(response);
+              }else{
+              let resp = JSON.parse(response);
+                if(typeof resp.CurrentLocation=="undefined"){
+                //Proceedings for invoice
+                 let sectionContent= `<table>
+   <tr>
+   <th>Booking Date</th>
+    <th>Item Name</th>
+    <th>From</th>
+    <th>To</th>
+    <th>Consigner</th>
+    <th>Consigner Address</th>
+    <th>Mobile</th>
+    <th>Consignee</th>
+    <th>Consignee Address</th>
+    <th>Mobile</th>
+    <th>Item Weight</th>
+    <th>Frieght Charges</th>
+    <th>Invoice Id</th>
+    <th>Tracking Id</th>
+    </tr>
+    <tr>
+    <td>${resp.Date}</td>
+    <td>${resp.ItemName}</td>
+    <td>${resp.From}</td>
+    <td>${resp.To}</td>
+    <td>${resp.consignerName}</td>
+    <td>${resp.consignerAddress}</td>
+    <td>${resp.consignerMobile}</td>
+    <td>${resp.consigneeName}</td>
+    <td>${resp.consigneeAddress}</td>
+    <td>${resp.consigneeMobile}</td>
+    <td>${resp.ItemWeight}</td>
+    <td>${resp.FrieghtCharges}</td>
+    <td>${resp.InvoiceId}</td>
+    <td>${resp.TrackingId}</td>
+  </tr>
+  </table>`
+
+ document.querySelector('#getResult').innerHTML = sectionContent;            
+
+  }else{
+    //Proceedings for Tracking
+  let sectionContent= `<table>
+   <tr>
+    <th>Item Name</th>
+    <th>From</th>
+    <th>To</th>
+    <th>Current Location</th>
+    </tr>
+    <tr>
+    <td>${resp.ItemName}</td>
+    <td>${resp.From}</td>
+    <td>${resp.To}</td>
+    <td>${resp.CurrentLocation}</td>
+  </tr>
+  </table>`
+
+ document.querySelector('#getResult').innerHTML = sectionContent;
+      }
+   }
+},
+ error: function(xhr) {
+  alert('Request Failed. Make Sure Server is Listening.')
+         }
+      });
+    }
+</script>
 </body>
 </html>

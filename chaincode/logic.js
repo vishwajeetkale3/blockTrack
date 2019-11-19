@@ -47,12 +47,12 @@ let Chaincode = class {
 
 		let consignmentAsBytes = await stub.getState(args[0]);
 		if (!consignmentAsBytes || consignmentAsBytes.toString().length <= 0) {
-			return Buffer.from('Item With this Id Doesnt Exist..!');
+			return Buffer.from('Error:Item With this Id Doesnt Exist..!');
 		}
 		let consignmentCheck = JSON.parse(consignmentAsBytes);
 		if (consignmentCheck.Type!= 'consignment') {
 
-			return Buffer.from("Not a Consignment..!");
+			return Buffer.from('Error:Not a Consignment.!');
 
 		} else {
 
@@ -110,13 +110,13 @@ let Chaincode = class {
 		let consignmentAsBytes = await stub.getState(args[2]);
 
 		if (!adminAsBytes || adminAsBytes.toString().length <= 0) {
-			return Buffer.from('Incorrect Admin Id..!');
+			return Buffer.from('Incorrect Admin Id.!');
 		}
 		let admin = JSON.parse(adminAsBytes);
 
 		if (admin.AccessKey != args[1]) {
 
-			return Buffer.from("Incorrect AccessKey...!");
+			return Buffer.from("Incorrect AccessKey.!");
 		}
 
 		if (!consignmentAsBytes || consignmentAsBytes.toString().length <= 0) {
