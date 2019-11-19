@@ -110,7 +110,7 @@ function bookConsignment() {
         $.ajax({
                 type: "post",
                 contentType: "application/x-www-form-urlencoded", 
-                url: 'http://${IP_ADDRESS}:8080/bookConsignment/',
+                url: 'http://localhost:8080/bookConsignment/',
                 data: {
                   'from': document.getElementById('from').value,
                    'to': document.getElementById('to').value,
@@ -138,7 +138,7 @@ function bookConsignment() {
         $.ajax({
                 type: "post",
                 contentType: "application/x-www-form-urlencoded", 
-                url: 'http://${IP_ADDRESS}:8080/updateShipment/',
+                url: 'http://localhost:8080/updateShipment/',
                 data: {
                   'adminId': document.getElementById('adminId').value,
                   'key': document.getElementById('key').value,
@@ -156,7 +156,7 @@ function bookConsignment() {
    }
 function trackConsignment() {
           $.ajax({
-             url: "http://${IP_ADDRESS}:8080/trackConsignment/",
+             url: "http://localhost:8080/trackConsignment/",
              type: "get",
              data: { 
             'trackingId':document.getElementById('trackingId').value
